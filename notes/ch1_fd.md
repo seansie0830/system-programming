@@ -74,6 +74,45 @@ the fd I get is 3
 ```
 > why the fd is 3? , because the pre-assigned fd are stdin (0) , stdout(1) , stderr(2) , and mostly the OS arrange the fd incrememtally , so this is why the fd are usually 3 , but this is not guranteed in every enviroment especially the system where the program has feteched a few fd recently
 ## 📚Read like a bookworm🪱
+### example code
+```c
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
 
+#define PAGE_SIZE 64
+
+int main() {
+    int fd = open("test.txt", O_RDONLY);
+    if (fd < 0) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    char buffer[PAGE_SIZE];
+    ssize_t bytesRead;
+    int i=0;
+    // Loop until read() returns 0 (EOF) or a negative value (Error)
+    while ((bytesRead = read(fd, buffer, PAGE_SIZE)) > 0) {
+        i++;
+        printf("\n\npage %d , offset %ld\n" ,i, bytesRead);
+        // --- Process your data here ---
+        // Remember: buffer is NOT null-terminated!
+        // If you are writing it to stdout, use write():
+        write(STDOUT_FILENO, buffer, bytesRead);
+
+    }
+
+    // Check if the loop terminated because of an error or actual EOF
+    if (bytesRead < 0) {
+        perror("Error reading file");
+    } else {
+        printf("\n--- End of File Reached Successfully ---\n");
+    }
+
+    close(fd);
+    return 0;
+}
+```
  
 
