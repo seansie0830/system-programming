@@ -21,6 +21,7 @@ By treating almost all I/O operations through the unified abstraction of a "file
 
 parameter explaination
 ### Parameter Breakdown
+
 - **`pathname`**: The path to the target file or device.
   - **Absolute paths** (e.g., `/var/log/syslog`) resolve starting from the root directory (`/`).
   - **Relative paths** (e.g., `new_file.txt` or `./config.json`) resolve relative to the current working directory (CWD) of the running process.
@@ -64,11 +65,14 @@ int main() {
     return 0;
 }
 ```
+> note that  return value of the unix system api mostly indicate the status , the convention is that if the return value is `-1` , the procedure fails , always check after invoke the UNIX api to avoid undefined operation based on failure operation.
  output as followiing
  ```text
 $ ./ch1a
 the fd I get is 3
 ```
 > why the fd is 3? , because the pre-assigned fd are stdin (0) , stdout(1) , stderr(2) , and mostly the OS arrange the fd incrememtally , so this is why the fd are usually 3 , but this is not guranteed in every enviroment especially the system where the program has feteched a few fd recently
+## 📚Read like a bookworm🪱
+
  
 
