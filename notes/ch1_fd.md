@@ -20,11 +20,26 @@ By treating almost all I/O operations through the unified abstraction of a "file
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/279e2a78-0014-45c3-a04a-32e5cb4b747a" />
 
 parameter explaination
-- pathname :
-- open flags
-- permission
-  - if you open **unexist** file with `O_CREAT` mode , `open()` would create a new file based on your **given permissions**
-  - if the file has been **exist** , the permission would be ignored
+### Parameter Breakdown
+- **`pathname`**: The path to the target file or device.
+  - **Absolute paths** (e.g., `/var/log/syslog`) resolve starting from the root directory (`/`).
+  - **Relative paths** (e.g., `new_file.txt` or `./config.json`) resolve relative to the current working directory (CWD) of the running process.
+- **`flags`**: Controls how the file is opened and manipulated. It is formed by bitwise OR-ing (`|`) values together:
+  - **Access Modes (Must specify exactly one):**
+    - `O_RDONLY`: Open for read-only access.
+    - `O_WRONLY`: Open for write-only access.
+    - `O_RDWR`: Open for both reading and writing.
+  - **Creation & Action Flags (Optional modifiers):**
+    - `O_CREAT`: Creates the file if it does not exist (requires the `mode` argument).
+    - `O_EXCL`: Used with `O_CREAT` to ensure the call fails if the file already exists (prevents race conditions).
+    - `O_TRUNC`: Truncates an existing regular file to length 0 (overwriting all contents).
+    - `O_APPEND`: Appends writes to the end of the file instead of starting at byte offset 0.
+  - **Operating Mode Flags (Optional):**
+    - `O_NONBLOCK`: Opens the file/socket in non-blocking mode.
+    - `O_CLOEXEC`: Automatically closes the file descriptor when `exec()` is called.
+- **`mode` (Permissions)**: Defines access permissions (e.g., `0644` or `S_IRUSR | S_IWUSR`):
+  - If you open a **non-existent file** with the `O_CREAT` flag, `open()` creates the file using the specified permissions.
+  - If the file **already exists**, this parameter is simply ignored.
  
 ### example
 ```c
