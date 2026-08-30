@@ -77,6 +77,10 @@ the fd I get is 3
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/410c9f3c-e9c0-49b5-8c1a-29e125b15eef" />
 
 ### example code
+using while loop , check if the return value is less than 1 as exception.
+coping with the exception
+- bytesRead == 0 : successfully reach the end of the file
+- bytesRead < 0 : an error occurs.
 ```c
 #include <stdio.h>
 #include <fcntl.h>
