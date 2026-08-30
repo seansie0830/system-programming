@@ -1,15 +1,18 @@
-# File descriptor
-## Everything is a file
+# Understanding File Descriptors
+
+## Everything is a File
+
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/ab3377ee-4756-4908-8bbb-82abcbc4562d" />
 
-there are a lot of feature on the computer system , but in a nutshell , what the computer mainly do is input something , do some magic and output something.
-this is what **Everythings is a file** comes in for .
+Modern operating systems handle countless complex tasks, but at their core, computing boils down to a simple cycle: **read input, process data, and write output**.
 
-by abstracting all sorts of operation into the **single** things a.k.a. file , the developer can only use one thought to interact with various resource such as 
-- file
-- device (e.g keyboard...)
-- pipe (from other program)
-- network (from other computer via network )
-- special sequence (from the program that generate some sequence , such as `dev/zero` `dev/random`
-- `stdin`
-- `stdout` and `stderr`
+This simplicity is made possible by the Unix philosophy: **"Everything is a file."**
+
+By treating almost all I/O operations through the unified abstraction of a "file," developers can interact with heterogeneous resources using the exact same standard interface (`open`, `read`, `write`, `close`). These resources include:
+
+- **Regular files** on disk
+- **Hardware devices** (keyboards, serial ports)
+- **Pipes** (data streams between processes)
+- **Network sockets** (remote machine communication)
+- **Virtual devices** (`/dev/zero`, `/dev/random`, `/dev/null`)
+- **Standard I/O streams** (`stdin`, `stdout`, and `stderr`)
