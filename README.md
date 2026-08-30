@@ -15,3 +15,5 @@ and the following is the topic we would cover
 - IPC
 - network and  peripheral devices
 - heterogeneous computing managment 
+# reference
+the image source is from my X account <https://x.com/PurrLinux>
