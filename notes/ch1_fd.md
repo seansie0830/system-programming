@@ -16,3 +16,6 @@ By treating almost all I/O operations through the unified abstraction of a "file
 - **Network sockets** (remote machine communication)
 - **Virtual devices** (`/dev/zero`, `/dev/random`, `/dev/null`)
 - **Standard I/O streams** (`stdin`, `stdout`, and `stderr`)
+## Lets get a file descriptor!
+<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/279e2a78-0014-45c3-a04a-32e5cb4b747a" />
+
