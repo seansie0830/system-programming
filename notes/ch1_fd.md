@@ -66,6 +66,7 @@ int main() {
 }
 ```
 > note that  return value of the unix system api mostly indicate the status , the convention is that if the return value is `-1` , the procedure fails , always check after invoke the UNIX api to avoid undefined operation based on failure operation.
+### result 
  output as followiing
  ```text
 $ ./ch1a
