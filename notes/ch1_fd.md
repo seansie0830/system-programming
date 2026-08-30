@@ -44,9 +44,16 @@ int main() {
     }
 
     // Use the file descriptor here...
-
+    printf("the fd I get is %d\n",fd);
     close(fd);
     return 0;
 }
 ```
+ output as followiing
+ ```text
+$ ./ch1a
+the fd I get is 3
+```
+> why the fd is 3? , because the pre-assigned fd are stdin (0) , stdout(1) , stderr(2) , and mostly the OS arrange the fd incrememtally , so this is why the fd are usually 3 , but this is not guranteed in every enviroment especially the system where the program has feteched a few fd recently
+ 
 
