@@ -19,3 +19,34 @@ By treating almost all I/O operations through the unified abstraction of a "file
 ## Lets get a file descriptor!
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/279e2a78-0014-45c3-a04a-32e5cb4b747a" />
 
+parameter explaination
+- pathname :
+- open flags
+- permission
+  - if you open **unexist** file with `O_CREAT` mode , `open()` would create a new file based on your **given permissions**
+  - if the file has been **exist** , the permission would be ignored
+ 
+### example
+```c
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main() {
+    // O_WRONLY: Open for writing
+    // O_CREAT: Create the file if it does not exist
+    // 0644: Read/Write for owner, Read for group and others
+    int fd = open("new_file.txt", O_WRONLY | O_CREAT, 0644);
+
+    if (fd == -1) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    // Use the file descriptor here...
+
+    close(fd);
+    return 0;
+}
+```
+
