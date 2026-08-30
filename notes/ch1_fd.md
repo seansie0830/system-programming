@@ -26,6 +26,8 @@ parameter explaination
   - **Absolute paths** (e.g., `/var/log/syslog`) resolve starting from the root directory (`/`).
   - **Relative paths** (e.g., `new_file.txt` or `./config.json`) resolve relative to the current working directory (CWD) of the running process.
 - **`flags`**: Controls how the file is opened and manipulated. It is formed by bitwise OR-ing (`|`) values together:
+<img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/0264b3e7-159a-4070-9643-fb986ea82900" />
+
   - **Access Modes (Must specify exactly one):**
     - `O_RDONLY`: Open for read-only access.
     - `O_WRONLY`: Open for write-only access.
