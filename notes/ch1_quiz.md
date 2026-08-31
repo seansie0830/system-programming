@@ -1,9 +1,4 @@
-This is an excellent direction. Traditional OS introductory courses often assign repetitive tasks like cloning `cat`, `head`, or building basic token-parsing shells. While functional, they only teach syntax without instilling an intuition for underlying hardware costs—such as syscall overhead, page alignment, cache locality, and disk seek penalties.
-
-By sticking exclusively to standard POSIX file descriptor primitives (`open`, `read`, `write`, `lseek`, `close`) and incorporating **precalculated offsets for $O(1)$ random access** (mirroring PDF xref tables and database storage engines), students work with minimal code and low resource overhead (requiring files only a few megabytes in size) while engaging directly with computer architecture and performance optimization.
-
----
-
+# Ch1 Quiz
 ## 4 Architecture-Centric Optimization Challenges
 
 ### Challenge 1: PDF-Style Tail-Indexed Binary Storage ($O(1)$ XRef Reader)
