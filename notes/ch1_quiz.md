@@ -65,9 +65,23 @@
 * **Concept**: When `lseek` advances beyond the current file end without writing intermediate bytes, the OS avoids allocating physical disk blocks for the gap, storing only metadata updates.
 * **Tasks**:
 1. Create a sparse file showing an apparent logical size of $1\text{ GB}$ while occupying only $4\text{ KB}$ of physical disk space (write 1 byte at index 0, `lseek` forward by $1\text{ GB}$, and write 1 final byte).
-2. Inspect and verify the discrepancy using `ls -lh` (logical file size) versus `du -h` (actual allocated physical blocks).
-3. Build a persistent sparse-array abstraction on disk that allocates storage only when specific distant indices are touched.
+
+### Challenge 5: Atomic File Updates & Durability (The Power Loss Simulator)
+
+* **Architectural Link**: Volatile Page Cache vs. Non-Volatile Storage (Disk Controller Write Barrier), Metadata Journaling, Atomicity via Inode Swapping.
+* **Concept**: `write()` only copies data to the kernel's OS Page Cache; it does not guarantee persistence. If power cuts or the process crashes mid-write, data is corrupted (torn write). To guarantee "All-or-Nothing" atomicity, databases write to a temporary file, flush to hardware, and replace the target atomically.
+* **Tasks**:
+1. **Direct Overwrite (Unsafe)**: Implement a saver that uses `open("data.txt", O_WRONLY | O_TRUNC)` and writes data in chunks.
+2. **Atomic Writer (Safe)**:
+* Write to a unique temporary file: `open("data.txt.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644)`.
+* Flush both data and metadata from kernel page cache to physical disk using `fsync(fd)`.
+* `close(fd)` and swap filenames atomically using `rename("data.txt.tmp", "data.txt")`.
+* *(Bonus)* Call `fsync()` on the parent directory file descriptor to persist the directory entry update.
 
 
+3. **Crash Test**: Insert random `raise(SIGKILL)` or `_exit(1)` statements midway through both implementations to verify that the atomic version leaves either the old intact file or the fully written new file, but never a corrupted/truncated state.
 
+
+* **Optimization Trade-off**:
+* Measure the high latency penalty of forcing physical disk syncs (`fsync`) versus raw buffered memory writes (`write` only).
 ---
