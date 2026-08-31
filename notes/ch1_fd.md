@@ -153,4 +153,6 @@ abcdefghijklmnopqrstuvwxyz
 ## 🛸seeking to anywhere of the file!
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/e85c5c59-1723-4a7b-ac1f-65ff67cf3ab3" />
 
-
+## misc
+### `fsync`
+### `fdatasync`
