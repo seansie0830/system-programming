@@ -85,3 +85,33 @@
 * **Optimization Trade-off**:
 * Measure the high latency penalty of forcing physical disk syncs (`fsync`) versus raw buffered memory writes (`write` only).
 ---
+---
+把這題放進去非常合適。它完美補齊了前面的題目缺少的一個極其重要的工業界場景：**「極端資源限制（Resource-Constrained）與固定空間預留（Pre-allocated Fixed Footprint）」**。
+
+前面 5 題的思維偏向 **「伺服器端 / 雲端儲存 / 資料庫（Database Systems）」**，而這一題把視角瞬間拉到了 **「嵌入式系統（Embedded Systems / IoT / Flight Recorders / Automotive ECU）」**。
+
+---
+
+
+### Challenge 6: Fixed-Size Circular Ring Buffer on Raw Disk (The Flight Recorder Pattern)
+
+* **Architectural Link**: Ring Buffer Topology on Persistent Storage, Out-of-Bounds Wrap-Around, Pre-allocated Zero-Fragmentation Storage, Header Dual-Buffering.
+* **Concept**: In embedded systems, storage is strictly capped (e.g., flash memory or SD card partition). Systems must continuously record telemetry/logs without exhausting disk space. When storage is full, the oldest data must be evicted automatically via wrap-around indexing, without reallocating or resizing files.
+* **Tasks**:
+
+1. **Pre-allocator**: Create and initialize a fixed-size binary file of exact size $64\text{ KB}$ (e.g., `ring.log`). The first 64 bytes are reserved for the **Metadata Header** (containing `magic_number`, `head_offset`, `tail_offset`, `sequence_id`, `crc32`), and the remaining space is the circular data pool.
+2. **Circular Writer**: Implement an append function that writes variable-length binary records `[len (2B) | payload (NB) | checksum (2B)]`:
+* If a record fits within the remaining space before the end of the file, write it directly.
+* If a record crosses the physical end-of-file boundary, split the payload into two `write()` and `lseek()` operations: fill up to the file end, jump (`lseek`) back to the start of the data pool (offset 64), and write the remainder.
+* Advance `head_offset`. If `head_offset` overtakes `tail_offset`, advance `tail_offset` past the discarded oldest records to avoid data corruption.
+
+
+3. **Circular Reader**: Read all valid active records chronologically from `tail_offset` to `head_offset`, correctly reassembling split records that wrap around the file boundary.
+4. **Header Atomicity**: Ensure metadata update does not leave the ring buffer in an undefined state if power is cut midway (e.g., using a dual-slot flipping header with CRC validation).
+
+* **Optimization Insights**:
+* Avoid any file growth or dynamic inode allocation after initialization (Zero Fragmentation).
+* Analyze why embedded databases and flight recorders (Black Boxes) prefer raw circular files over standard append-only logs.
+
+---
+
