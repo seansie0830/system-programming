@@ -131,7 +131,9 @@ int main() {
 ### example
 `printf` is just a wrapped and cross-platform write() function , let use the `write` instead to print something on the screen on `stdout`.
 
-remember , tread everythings as a file , the `stdout` definite are file , if you want to output something on screen , write something into this **file**
+remember , treat everythings as a file in unix, the `stdout` is definitely a write-only special file , if you want to output something on screen , write something into this **file**.
+
+note that the fd is 1 by default
 
 ```c
 #include<unistd.h>
