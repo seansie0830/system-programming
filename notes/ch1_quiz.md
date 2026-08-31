@@ -85,12 +85,8 @@
 * **Optimization Trade-off**:
 * Measure the high latency penalty of forcing physical disk syncs (`fsync`) versus raw buffered memory writes (`write` only).
 ---
----
-把這題放進去非常合適。它完美補齊了前面的題目缺少的一個極其重要的工業界場景：**「極端資源限制（Resource-Constrained）與固定空間預留（Pre-allocated Fixed Footprint）」**。
 
-前面 5 題的思維偏向 **「伺服器端 / 雲端儲存 / 資料庫（Database Systems）」**，而這一題把視角瞬間拉到了 **「嵌入式系統（Embedded Systems / IoT / Flight Recorders / Automotive ECU）」**。
 
----
 
 
 ### Challenge 6: Fixed-Size Circular Ring Buffer on Raw Disk (The Flight Recorder Pattern)
