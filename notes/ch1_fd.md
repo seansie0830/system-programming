@@ -118,9 +118,35 @@ int main() {
         printf("\n--- End of File Reached Successfully ---\n");
     }
 
+
     close(fd);
     return 0;
 }
 ```
+## let write into the file
+
+<img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/5d83a20f-74d3-4ccd-823a-b37bd601d0cc" />
+
  
+### example
+`printf` is just a wrapped and cross-platform write() function , let use the `write` instead to print something on the screen on `stdout`.
+
+remember , tread everythings as a file , the `stdout` definite are file , if you want to output something on screen , write something into this **file**
+
+```c
+#include<unistd.h>
+#include <string.h>
+#define STDOUT 1
+int main(){
+	char *letters = "abcdefghijklmnopqrstuvwxyz\n";
+	ssize_t size = write(STDOUT , letters , strlen(letters));
+	return 0;
+}
+
+```
+### result
+```
+abcdefghijklmnopqrstuvwxyz
+```
+
 
