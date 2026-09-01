@@ -6,8 +6,8 @@ in this note , we would cover main concept of the linux system programming with 
 
 and the following is the topic we would cover 
 - file descriptor
-- pipes
 - process
+- pipes
 - signals
 - threads
 - mutex and locks
