@@ -27,6 +27,7 @@ where
 
 ## sealing the pipe
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/1aa7b65f-2664-4c7b-84e6-a2367bf077ac" />
+
 since when a pipe is created , the related process would get the fd at the both end , and `read()` function would return 0 to notify the reader that the pipe is empty **only if** all the **write fd** is closed , which means that we are supposed to close one end once the pipe is created.
 ```c
 #include <stdio.h>
