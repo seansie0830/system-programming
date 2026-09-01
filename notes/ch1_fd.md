@@ -155,4 +155,21 @@ abcdefghijklmnopqrstuvwxyz
 
 ## misc
 ### `fsync`
+```c
+int fsync(int fd);
+```
+
+syncing **all** data , including the **metadata** of the modified data on the given fd.
+where
+- return value , the status of the operation , `-1` means error as convention
+- `fd` the file descriptor
+
 ### `fdatasync`
+```c
+
+int fdatasync(int fd);
+```
+only sync the **minimal required data** of the modified data on the fd.
+
+where the prototype is same as prev func.
+
