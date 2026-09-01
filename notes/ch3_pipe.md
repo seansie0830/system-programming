@@ -26,4 +26,5 @@ where
 - `fd[1]` is for write , just like the `stdout` is 1
 
 ## sealing the pipe
+<img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/1aa7b65f-2664-4c7b-84e6-a2367bf077ac" />
 
